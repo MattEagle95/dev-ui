@@ -1,0 +1,66 @@
+<div class="d-flex flex-column justify-items-end h-100">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/process" routerLinkActive="active">
+                <i-feather name="cpu"></i-feather> Process
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/users" routerLinkActive="active">
+                <i-feather name="users"></i-feather> Users
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">
+                <i-feather name="pie-chart"></i-feather> Monitoring
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+                <i-feather name="sliders"></i-feather> Settings
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/system" routerLinkActive="active">
+                <i-feather name="info"></i-feather> System
+            </a>
+        </li>
+    </ul>
+    <div class="mt-auto">
+        <div class="row m-1">
+            <div class="col" *ngIf="systeminfo">
+                {{ systeminfo[4] }}
+            </div>
+        </div>
+        <div class="row m-1" *ngIf="systeminfo">
+            <div class="col">
+                CPU
+            </div>
+            <div class="col">
+                {{ systeminfo[0] }} %
+            </div>
+            <div class="col">
+                <ngb-progressbar type="success" [value]='systeminfo[0]'>
+                </ngb-progressbar>
+            </div>
+        </div>
+        <div class="row m-1" *ngIf="systeminfo">
+            <div class="col">
+                RAM
+            </div>
+            <div class="col">
+                {{ (100 - systeminfo[1]["freeMemPercentage"]) }} %
+            </div>
+            <div class="col">
+                <ngb-progressbar type="success" [value]='(100 - systeminfo[1]["freeMemPercentage"])'>
+                </ngb-progressbar>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <button class="btn btn-block btn-outline-light rounded-0" style="height: 52px" placement="top"
+                ngbTooltip="Change name and password"><i data-feather="cpu"></i></button>
+            <button class="btn btn-block btn-outline-light rounded-0" style="height: 52px" placement="top"
+                ngbTooltip="Change name and password"><i data-feather="power"></i></button>
+        </div>
+    </div>
+</div>

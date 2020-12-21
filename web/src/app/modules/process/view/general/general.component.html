@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+        <label for="name" class="col-sm-6 text-center col-form-label">Name</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="name" id="name">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="script" class="col-sm-6 text-center col-form-label">Script path</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="script" id="script">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="cwd" class="col-sm-6 text-center col-form-label">Cwd</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="cwd" id="cwd">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="args" class="col-sm-6 text-center col-form-label">Args</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="args" id="args">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="interpreter" class="col-sm-6 text-center col-form-label">Interpreter</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="interpreter" id="interpreter">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="interpreterArgs" class="col-sm-6 text-center col-form-label">Interpreter args</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" formControlName="interpreterArgs" id="interpreterArgs">
+        </div>
+    </div>
+
+    <button type="submit">Create</button>
+</form>

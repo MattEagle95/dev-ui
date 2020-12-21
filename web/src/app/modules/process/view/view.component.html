@@ -1,0 +1,23 @@
+<div class="row pt-4">
+  <div class="col-2"></div>
+  <div class="col-8 d-flex justify-content-between align-items-center">
+    <h3>Proccess: {{process?.name}}</h3>
+    <nav class="nav text-dark">
+      <button class="btn btn-sm btn-outline-primary" *ngIf="process?.pm2_env?.status === 'online'">
+        <i-feather name="refresh-cw" class="ico text-primary" placement="top" ngbTooltip="Restart"></i-feather>
+      </button>
+      <button class="btn btn-sm btn-outline-danger" *ngIf="process?.pm2_env?.status === 'online'">
+        <i-feather name="stop-circle" class="ico text-danger" placement="top" ngbTooltip="Stop"></i-feather>
+      </button>
+      <button class="btn btn-sm btn-outline-success" *ngIf="process?.pm2_env?.status !== 'online'">
+        <i-feather name="play-circle" class="ico text-success" placement="top" ngbTooltip="Start"></i-feather>
+      </button>
+      <button class="btn btn-sm btn-outline-danger">
+        <i-feather name="trash" class="ico text-danger" placement="top" ngbTooltip="Delete"></i-feather>
+      </button>
+    </nav>
+  </div>
+</div>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<router-outlet></router-outlet>

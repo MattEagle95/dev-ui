@@ -1,0 +1,67 @@
+<form>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="form-group form-inline">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><span data-feather="search"></span></div>
+        </div>
+        <input type="text" class="form-control form-control-sm" id="searchTerm" name="searchTerm" [(ngModel)]="service.searchTerm"
+          placeholder="Search...">
+      </div>
+      <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+    </div>
+    <div>
+      <div class="d-flex justify-content-between align-items-center">
+        <select class="custom-select" style="width: auto; height: 32px;" name="pageSize" [(ngModel)]="service.pageSize">
+          <option [ngValue]="10">Action...</option>
+          <option [ngValue]="15">15 items per page</option>
+          <option [ngValue]="25">25 items per page</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-outline-secondary ml-2"><i data-feather="plus-circle"
+            class="text-success"></i>
+          Add</button>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th style="width: 25px"></th>
+        <th scope="col">#</th>
+        <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+        <th scope="col" sortable="roles" (sort)="onSort($event)">Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let country of countries$ | async">
+        <td>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1"> </label>
+          </div>
+        </td>
+        <th scope="row">{{ country.id }}</th>
+        <td>
+          <ngb-highlight [highlightClass]="'highlighted'" [result]="country.name" [term]="service.searchTerm">
+          </ngb-highlight>
+        </td>
+        <td>
+          root
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between align-items-center p-2">
+    <div>Total items: {{ total$ | async }}</div>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="25">25 items per page</option>
+    </select>
+
+    <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+    </ngb-pagination>
+  </div>
+
+</form>

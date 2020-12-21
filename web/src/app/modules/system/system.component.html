@@ -1,0 +1,80 @@
+<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow mb-3">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><span data-feather="info"></span> System</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link text-dark" routerLink="/processes" routerLinkActive="active">
+        Overview
+      </a>
+    </li>
+  </ul>
+</nav>
+<div class="mx-5" style="overflow: hidden;">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">PM2-UI</h5>
+          <div class="row">
+            <div class="col">
+              Version
+            </div>
+            <div class="col text-center">
+              1.0.0
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              DB-Size
+            </div>
+            <div class="col text-center">
+              1 MB
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group" role="group">
+            <button class="btn btn-outline-primary">Check for updates</button>
+            <button class="btn btn-outline-primary">Changelog</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Database</h5>
+          <div class="row mt-3">
+            <div class="col">
+              DB-Path
+            </div>
+            <div class="col text-center">
+              storage/db/db.sqlite3
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              DB-Size
+            </div>
+            <div class="col text-center">
+              1 MB
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Administration</h5>
+            <button class="btn btn-block btn-outline-primary border-0 text-left">Notifications</button>
+            <button class="btn btn-block btn-outline-primary border-0 text-left">Audit logs</button>
+            <button class="btn btn-block btn-outline-warning border-0 text-left">Clean Database</button>
+            <button class="btn btn-block btn-outline-danger border-0 text-left" (click)="resetDatabase()">Reset Database</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

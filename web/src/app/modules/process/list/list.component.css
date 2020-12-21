@@ -1,0 +1,54 @@
+.has-animation-online {
+    animation: animation-online 1.5s;
+}
+
+@keyframes animation-online {
+    50% {
+        background-color: rgb(97, 217, 124);
+        color: black;
+    }
+    100% {
+        background-color: transparent;
+        color: white;
+    }
+}
+
+.has-animation-offline {
+    animation: animation-offline 1.5s;
+}
+
+@keyframes animation-offline {
+    50% {
+        background-color: rgb(223, 70, 85);
+        color: black;
+    }
+    100% {
+        background-color: transparent;
+        color: white;
+    }
+}
+
+thead tr th {
+    border-top: none;
+}
+
+.ico {
+    margin-left: 5px;
+}
+
+table {
+    height: auto
+}
+
+thead tr:first-child th {
+    position: sticky;
+    top: 0;
+}
+
+thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}

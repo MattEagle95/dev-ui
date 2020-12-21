@@ -1,0 +1,401 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title">Prozess hinzufügen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <li ngbNavItem>
+        <a ngbNavLink>Start script</a>
+        <ng-template ngbNavContent>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="name" class="col-form-label mb-0 pb-0 pt-0">Name</label>
+              <small class="form-text text-muted mt-0">application name (default to script filename without
+                extension)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="name" id="name" placeholder="my-api">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="script" class="col-form-label mb-0 pb-0 pt-0">Script</label>
+              <small class="form-text text-muted mt-0">script path relative to pm2 start</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="script" id="script" placeholder="./api/app.js">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="cwd" class="col-form-label mb-0 pb-0 pt-0">CWD</label>
+              <small class="form-text text-muted mt-0">the directory from which your app will be launched</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="cwd" id="cwd" placeholder="/var/www/">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="args" class="col-form-label mb-0 pb-0 pt-0">Args</label>
+              <small class="form-text text-muted mt-0">string containing all arguments passed via CLI to script</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="args" id="args" placeholder="-a 13 -b 12">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="interpreter" class="col-form-label mb-0 pb-0 pt-0">Interpreter</label>
+              <small class="form-text text-muted mt-0">interpreter absolute path (default to node)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="interpreter" id="interpreter"
+                placeholder="/usr/bin/python">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="interpreter_args" class="col-form-label mb-0 pb-0 pt-0">Interpreter args</label>
+              <small class="form-text text-muted mt-0">option to pass to the interpreter</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="interpreter_args" id="interpreter_args"
+                placeholder="–harmony">
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Advanced</a>
+        <ng-template ngbNavContent>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="instances" class="col-form-label mb-0 pb-0 pt-0">Instances</label>
+              <small class="form-text text-muted mt-0">number of app instance to be launched</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="instances" id="instances" placeholder="1">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="exec_mode" class="col-form-label mb-0 pb-0 pt-0">Exec Mode</label>
+              <small class="form-text text-muted mt-0">mode to start your app, can be “cluster” or “fork”, default
+                fork</small>
+            </div>
+            <div class="col-sm-6">
+              <select id="exec_mode" class="form-control" formControlName="exec_mode">
+                <option value="fork">fork</option>
+                <option value="cluster">cluster</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="watch" class="col-form-label mb-0 pb-0 pt-0">Watch</label>
+              <small class="form-text text-muted mt-0">enable watch & restart feature, if a file change in the folder or
+                subfolder, your app will get reloaded</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="watch" formControlName="watch">
+                <label class="custom-control-label" for="watch"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="ignore_watch" class="col-form-label mb-0 pb-0 pt-0">Ignore watch</label>
+              <small class="form-text text-muted mt-0">list of regex to ignore some file or folder names by the watch
+                feature</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="ignore_watch" id="ignore_watch"
+                placeholder="[”[\/\\]\./”, “node_modules”]">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="max_memory_restart" class="col-form-label mb-0 pb-0 pt-0">Max memory restart</label>
+              <small class="form-text text-muted mt-0">your app will be restarted if it exceeds the amount of memory
+                specified.
+                human-friendly format : it can be “10M”, “100K”, “2G” and so on…</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="max_memory_restart" id="max_memory_restart"
+                placeholder="150M">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="env" class="col-form-label mb-0 pb-0 pt-0">Env</label>
+              <small class="form-text text-muted mt-0">env variables which will appear in your app</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="env" id="env"
+                placeholder="{“NODE_ENV”: “development”, “ID”: “42”}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="source_map_support" class="col-form-label mb-0 pb-0 pt-0">Source map support</label>
+              <small class="form-text text-muted mt-0">default to true, [enable/disable source map file]</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="source_map_support"
+                  formControlName="source_map_support">
+                <label class="custom-control-label" for="source_map_support"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="instance_var" class="col-form-label mb-0 pb-0 pt-0">Instance var</label>
+              <small class="form-text text-muted mt-0"></small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="instance_var" id="instance_var"
+                placeholder="“NODE_APP_INSTANCE”">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="filter_env" class="col-form-label mb-0 pb-0 pt-0">Filter env</label>
+              <small class="form-text text-muted mt-0">Excludes global variables starting with “REACT_” and will not
+                allow their penetration into the cluster.</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="filter_env" id="filter_env"
+                placeholder="[ “REACT_” ]">
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Log files</a>
+        <ng-template ngbNavContent>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="log_date_format" class="col-form-label mb-0 pb-0 pt-0">Log date format</label>
+              <small class="form-text text-muted mt-0">log date format (see log section)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="log_date_format" id="log_date_format"
+                placeholder="YYYY-MM-DD HH:mm Z">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="error_file" class="col-form-label mb-0 pb-0 pt-0">Error file</label>
+              <small class="form-text text-muted mt-0">error file path (default to $HOME/.pm2/logs/XXXerr.log)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="error_file" id="error_file">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="out_file" class="col-form-label mb-0 pb-0 pt-0">Out file</label>
+              <small class="form-text text-muted mt-0">output file path (default to $HOME/.pm2/logs/XXXout.log)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="out_file" id="out_file">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="combine_logs" class="col-form-label mb-0 pb-0 pt-0">Combine logs</label>
+              <small class="form-text text-muted mt-0"> if set to true, avoid to suffix logs file with the process
+                id</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="combine_logs" formControlName="combine_logs">
+                <label class="custom-control-label" for="combine_logs"></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="pid_file" class="col-form-label mb-0 pb-0 pt-0">PID file</label>
+              <small class="form-text text-muted mt-0">pid file path (default to $HOME/.pm2/pid/app-pm_id.pid)</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="pid_file" id="pid_file">
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Control flow</a>
+        <ng-template ngbNavContent>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="min_uptime" class="col-form-label mb-0 pb-0 pt-0">Min uptime</label>
+              <small class="form-text text-muted mt-0">min uptime of the app to be considered started</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="min_uptime" id="min_uptime">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="listen_timeout" class="col-form-label mb-0 pb-0 pt-0">Listen timeout</label>
+              <small class="form-text text-muted mt-0">time in ms before forcing a reload if app not listening</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" formControlName="listen_timeout" id="listen_timeout"
+                placeholder="8000">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="kill_timeout" class="col-form-label mb-0 pb-0 pt-0">Kill timeout</label>
+              <small class="form-text text-muted mt-0">time in milliseconds before sending a final SIGKILL</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" formControlName="kill_timeout" id="kill_timeout"
+                placeholder="1600">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="shutdown_with_message" class="col-form-label mb-0 pb-0 pt-0">Shutdown with messages</label>
+              <small class="form-text text-muted mt-0">shutdown an application with process.send(‘shutdown’) instead of
+                process.kill(pid, SIGINT)</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="shutdown_with_message"
+                  formControlName="shutdown_with_message">
+                <label class="custom-control-label" for="shutdown_with_message"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="wait_ready" class="col-form-label mb-0 pb-0 pt-0">Wait ready</label>
+              <small class="form-text text-muted mt-0">Instead of reload waiting for listen event, wait for
+                process.send(‘ready’)</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="wait_ready" formControlName="wait_ready">
+                <label class="custom-control-label" for="wait_ready"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="max_restarts" class="col-form-label mb-0 pb-0 pt-0">Max restarts</label>
+              <small class="form-text text-muted mt-0">number of consecutive unstable restarts (less than 1sec interval
+                or custom time via min_uptime)
+                before your app is considered errored and stop being restarted</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" formControlName="max_restarts" id="max_restarts"
+                placeholder="10">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="restart_delay" class="col-form-label mb-0 pb-0 pt-0">Max restarts</label>
+              <small class="form-text text-muted mt-0">time to wait before restarting a crashed app (in milliseconds).
+                defaults to 0.</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" formControlName="restart_delay" id="restart_delay"
+                placeholder="4000">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="autorestart" class="col-form-label mb-0 pb-0 pt-0">Autorestart</label>
+              <small class="form-text text-muted mt-0">true by default. if false, PM2 will not restart your app if it
+                crashes or ends peacefully</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="autorestart" formControlName="autorestart">
+                <label class="custom-control-label" for="autorestart"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="cron_restart" class="col-form-label mb-0 pb-0 pt-0">Cron restart</label>
+              <small class="form-text text-muted mt-0">a cron pattern to restart your app. Application must be running
+                for cron feature to work</small>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="cron_restart" id="cron_restart"
+                placeholder="1 0 * * *">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="vizion" class="col-form-label mb-0 pb-0 pt-0">Vizion</label>
+              <small class="form-text text-muted mt-0">true by default. if false, PM2 will start without vizion features
+                (versioning control metadatas)</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="vizion" formControlName="vizion">
+                <label class="custom-control-label" for="vizion"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="force" class="col-form-label mb-0 pb-0 pt-0">Force</label>
+              <small class="form-text text-muted mt-0">defaults to false. if true, you can start the same script several
+                times which is usually not allowed by PM2</small>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="force" formControlName="force">
+                <label class="custom-control-label" for="force"></label>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+    <button type="button" class="btn btn-outline-success" (click)="activeModal.close()">
+      <i-feather name="play-circle"></i-feather>
+      Start process
+    </button>
+  </div>
+</form>

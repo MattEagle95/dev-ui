@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title">Prozess hinzufügen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <label for="script" class="col-form-label mb-0 pb-0 pt-0">Script</label>
+        <small class="form-text text-muted mt-0">script path relative to pm2 start</small>
+      </div>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" formControlName="script" id="script" placeholder="./api/app.js">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <label for="name" class="col-form-label mb-0 pb-0 pt-0">Name</label>
+        <small class="form-text text-muted mt-0">application name (default to script filename without
+          extension)</small>
+      </div>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" formControlName="name" id="name" placeholder="my-api">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+    <button type="button" class="btn btn-outline-success" (click)="onSubmit()">
+      <i-feather name="play-circle"></i-feather>
+      Start process
+    </button>
+  </div>
+</form>

@@ -1,0 +1,139 @@
+<!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h3 ml-2">Users</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary"><i data-feather="plus-circle"
+          class="text-success"></i>
+        Add</button>
+    </div>
+  </div>
+</div> -->
+<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow mb-3">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><span data-feather="sliders"></span> Settings</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link text-dark" routerLink="/processes" routerLinkActive="active">
+        System
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark" routerLink="/processes" routerLinkActive="active">
+        User-Defaults
+      </a>
+    </li>
+  </ul>
+</nav>
+<div class="row h-100">
+  <nav class="col-2 bg-light">
+    <div class="d-flex flex-column justify-items-end h-100">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/process" routerLinkActive="active">
+            <span data-feather="cpu"></span>
+            Process
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/users" routerLinkActive="active">
+            <span data-feather="users"></span>
+            Users
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">
+            <span data-feather="pie-chart"></span>
+            Monitoring
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+            <span data-feather="sliders"></span>
+            Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/system" routerLinkActive="active">
+            <span data-feather="info"></span>
+            System
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="col-10">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form">
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Dashboard</label>
+            <div class="col-sm-6 text-center">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1"></label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option value="User preferences">User preferences</option>
+                <option value="Locked">Locked</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Dark mode</label>
+            <div class="col-sm-6 text-center">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1"></label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option value="User preferences">User preferences</option>
+                <option value="Locked">Locked</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Confirmations</label>
+            <div class="col-sm-6 text-center">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1"></label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option value="User preferences">User preferences</option>
+                <option value="Locked">Locked</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Confirmations</label>
+            <div class="col-sm-6 text-center">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1"></label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select class="form-control">
+                <option value="User preferences">User preferences</option>
+                <option value="Locked">Locked</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-right">
+        <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="!form.valid"><span
+            data-feather="save"></span> Save</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,186 @@
+<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow mb-3">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0" href="#"><span data-feather="cpu"></span> Process</a>
+    <input class="form-control form-control-dark ml-3" style="border: 1px solid white" type="text" id="searchTerm" name="searchTerm" [(ngModel)]="service.searchTerm" placeholder="Search" aria-label="Search">
+    <nav class="nav pl-3 text-dark">
+        <div class="btn-group mr-3">
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="create()">
+        <div class="d-flex justify-content-between align-items-center">
+          <i data-feather="plus-circle" class="text-success"></i>
+          <div class="ml-1">
+            Add
+          </div>
+        </div>
+      </button>
+            <div class="btn-group" ngbDropdown display="dynamic" role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="createScriptpath()">Scriptpath</button>
+                    <button ngbDropdownItem>JSON path</button>
+                    <button ngbDropdownItem>Custom options</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</nav>
+
+<form>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th style="width: 25px"></th>
+                <th scope="col">#</th>
+                <th scope="col" sortable="interpreter" (sort)="onSort($event)">Interpreter</th>
+                <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+                <th scope="col" sortable="version" (sort)="onSort($event)">Version</th>
+                <th scope="col" width="100px">CPU</th>
+                <th scope="col">Memory</th>
+                <th scope="col">Mode</th>
+                <th scope="col">Uptime</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let country of data" [ngClass]="{'has-animation-online': country.pm2_env?.status === 'online', 'has-animation-offline': country.pm2_env?.status === 'stopped'}">
+                <!-- <td>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1"> </label>
+          </div>
+        </td> -->
+                <td>
+                    <i-feather name="cpu" [ngClass]="{'text-success': country.pm2_env?.status === 'online', 'text-warning': (country.pm2_env?.status === 'launching' || country.pm2_env?.status === 'stopping'), 'text-danger': country.pm2_env?.status === 'stopped'}" placement="top"
+                        ngbTooltip="Online"></i-feather>
+                </td>
+                <th scope="row">{{ country.pm_id }}</th>
+                <td>{{ country.pm2_env?.exec_interpreter }}</td>
+                <td>{{ country.name }}</td>
+                <td>{{ country.pm2_env?.version }}</td>
+                <td>{{ country.monit?.cpu }} %</td>
+                <td>{{(country.monit?.memory / 1000000).toFixed(2)}} mb</td>
+                <td>{{ country.pm2_env?.exec_mode }}</td>
+                <td>{{ country.pm2_env?.pm_uptime | dateAgo }}</td>
+                <td class="text-right">
+                    <i-feather name="more-horizontal" class="ico text-primary" placement="top" ngbTooltip="Details" [routerLink]="['/process', country.pm_id]"></i-feather>
+                    <i-feather name="refresh-cw" *ngIf="country.pm2_env?.status === 'online'" class="ico text-primary" (click)="restart(country.name)" placement="top" ngbTooltip="Restart"></i-feather>
+                    <i-feather name="stop-circle" *ngIf="country.pm2_env?.status === 'online'" class="ico text-danger" placement="top" ngbTooltip="Stop" (click)="stop(country.name)"></i-feather>
+                    <i-feather name="play-circle" *ngIf="country.pm2_env?.status !== 'online'" class="ico text-success" placement="top" ngbTooltip="Start" (click)="restart(country.name)"></i-feather>
+                    <i-feather name="trash" class="ico text-danger" placement="top" ngbTooltip="Delete" (click)="deleteProcess(country.name)"></i-feather>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center p-2">
+        <div>Total items: {{ total$ | async }}</div>
+
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="25">25 items per page</option>
+    </select>
+
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+        </ngb-pagination>
+    </div>
+
+</form>
+
+<!-- <div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Interpreter</th>
+        <th scope="col">Name</th>
+        <th scope="col">Version</th>
+        <th scope="col" width="100px">CPU</th>
+        <th scope="col">Memory</th>
+        <th scope="col">Status</th>
+        <th scope="col">Autorestart</th>
+        <th scope="col">Logs</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="getMainProcess() !== null" class="table-success">
+        <th scope="row">{{getMainProcess().pm_id}}</th>
+        <td>{{getMainProcess().pm2_env.exec_interpreter}}</td>
+        <td>{{getMainProcess().name}}</td>
+        <td>{{getMainProcess().pm2_env.version}}</td>
+        <td>{{getMainProcess().monit.cpu}} %</td>
+        <td>{{(getMainProcess().monit.memory / 1000000).toFixed(2)}} mb</td>
+        <td>{{getMainProcess().pm2_env.status}}</td>
+        <td>{{getMainProcess().pm2_env.autorestart}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary ml-2" (click)="logs(getMainProcess().name)">
+            <svg class="bi bi-file-text" width="1em" height="1em" fill="currentColor">
+              <use xlink:href="assets/bootstrap-icons.svg#file-text" />
+            </svg>
+          </button>
+          <button class="btn btn-sm btn-primary" (click)="flush(getMainProcess().name)">
+            <svg class="bi bi-trash" width="1em" height="1em" fill="currentColor">
+              <use xlink:href="assets/bootstrap-icons.svg#trash" />
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="restart(getMainProcess().name)">
+            <svg class="bi bi-arrow-clockwise" width="1em" height="1em" fill="currentColor"
+              *ngIf="!checkLoading('restart', getMainProcess().name)">
+              <use xlink:href="assets/bootstrap-icons.svg#arrow-clockwise" />
+            </svg>
+            <svg class="bi bi-hourglass" width="1em" height="1em" fill="currentColor"
+              *ngIf="checkLoading('restart', getMainProcess().name)">
+              <use xlink:href="assets/bootstrap-icons.svg#hourglass" />
+            </svg>
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngFor="let process of getProcesses() trackBy: trackProcess"
+        [ngClass]="{'table-success': process.pm2_env.status === 'online'}">
+        <th scope="row">{{process.pm_id}}</th>
+        <td>{{process.pm2_env.exec_interpreter}}</td>
+        <td>{{process.name}}</td>
+        <td>{{process.pm2_env.version}}</td>
+        <td>{{process.monit.cpu}} %</td>
+        <td>{{(process.monit.memory / 1000000).toFixed(2)}} mb</td>
+        <td>{{process.pm2_env.status}}</td>
+        <td>{{process.pm2_env.autorestart}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary ml-2" (click)="logs(process.name)">
+            <svg class="bi bi-file-text" width="1em" height="1em" fill="currentColor">
+              <use xlink:href="assets/bootstrap-icons.svg#file-text" />
+            </svg>
+          </button>
+          <button class="btn btn-sm btn-primary" (click)="flush(process.name)">
+            <svg class="bi bi-trash" width="1em" height="1em" fill="currentColor">
+              <use xlink:href="assets/bootstrap-icons.svg#trash" />
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger" *ngIf="process.pm2_env.status === 'online'"
+            (click)="stop(process.name)">
+            <svg class="bi bi-stop-fill" width="1em" height="1em" fill="currentColor"
+              *ngIf="!checkLoading('stop', process.name)">
+              <use xlink:href="assets/bootstrap-icons.svg#stop-fill" />
+            </svg>
+            <svg class="bi bi-hourglass" width="1em" height="1em" fill="currentColor"
+              *ngIf="checkLoading('stop', process.name)">
+              <use xlink:href="assets/bootstrap-icons.svg#hourglass" />
+            </svg>
+          </button>
+          <button class="btn btn-sm btn-primary" (click)="restart(process.name)">
+            <svg class="bi bi-arrow-clockwise" width="1em" height="1em" fill="currentColor"
+              *ngIf="!checkLoading('restart', process.name)">
+              <use xlink:href="assets/bootstrap-icons.svg#arrow-clockwise" />
+            </svg>
+            <svg class="bi bi-hourglass" width="1em" height="1em" fill="currentColor"
+              *ngIf="checkLoading('restart', process.name)">
+              <use xlink:href="assets/bootstrap-icons.svg#hourglass" />
+            </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

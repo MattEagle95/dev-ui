@@ -1,0 +1,52 @@
+<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow mb-3">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0" href="#"><span data-feather="file-text"></span> Log notifications</a>
+  <input class="form-control form-control-dark ml-3" style="border: 1px solid white" type="text" id="searchTerm"
+    name="searchTerm" placeholder="Search" aria-label="Search">
+  <nav class="nav pl-3 text-dark">
+    <div class="btn-group mr-3">
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        <div class="d-flex justify-content-between align-items-center">
+          <i data-feather="plus-circle" class="text-success"></i>
+          <div class="ml-1">
+            Add
+          </div>
+        </div>
+      </button>
+      <div class="btn-group" ngbDropdown display="dynamic" role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem>Scriptpath</button>
+          <button ngbDropdownItem>JSON path</button>
+          <button ngbDropdownItem>Custom options</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</nav>
+
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th scope="col" width="150px">Time</th>
+      <th scope="col" width="100px">Type</th>
+      <th scope="col" width="250px">Service</th>
+      <th scope="col">Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let log of getLogs()" [ngClass]="{'has-animation-warning': log.type === 'warning', 'has-animation-error': log.type === 'error'}">
+      <th scope="row">
+        {{log.time | date: 'HH:mm:ss'}}
+      </th>
+      <th>
+        <span class="badge"
+          [ngClass]="{'badge-warning': log.type === 'warning', 'badge-danger': log.type === 'error'}">{{ log.type
+          }}</span>
+      </th>
+      <th scope="row">
+        Test
+      </th>
+      <td>{{ log.msg }}</td>
+    </tr>
+  </tbody>
+</table>

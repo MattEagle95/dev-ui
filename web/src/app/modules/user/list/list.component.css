@@ -1,0 +1,8 @@
+thead tr th {
+  border-top: none;
+}
+
+.highlighted {
+  color: yellow;
+  font-size: 16px;
+}

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center align-items-center h-100">
+  <form class="form-signin" [formGroup]="form" (ngSubmit)="onSubmit()"
+    [ngClass]="{'animate__animated animate__fadeOut': loading, 'animate__animated animate__fadeIn': !loading}" [hidden]="loading">
+    <h1 class="h3 mb-3 font-weight-normal">
+      <i-feather data-feather="cpu"></i-feather> PM2 - Login
+    </h1>
+    <!-- <div class="alert alert-info" [ngClass]="{'animate__animated animate__headShake': loading}" *ngIf="loading">Lade...</div> -->
+    <div class="alert alert-danger" [ngClass]="{'animate__animated animate__delay-1s animate__headShake': loaded}" style="--animate-delay: 0.2s;" *ngIf="loaded">Login
+      fehlgeschlagen</div>
+    <input type="text" id="email" class="form-control mb-2" formControlName="email" placeholder="E-Mail" required
+      autofocus [ngClass]="displayFieldCss('email')">
+    <div class="invalid-feedback" [ngClass]="displayFieldCss2('email')">
+      <div *ngIf="email.invalid && email.errors.required && (email.dirty || email.touched)">
+        E-Mail is required
+      </div>
+      <div *ngIf="email.invalid && email.errors.email && (email.dirty || email.touched)">
+        This must be a valid e-mail
+      </div>
+    </div>
+    <input type="password" id="password" class="form-control mt-2" formControlName="password" placeholder="Password"
+      required [ngClass]="displayFieldCss('password')">
+    <div class="invalid-feedback" [ngClass]="displayFieldCss2('password')">
+      <div *ngIf="password.invalid && password.errors.required && (password.dirty || password.touched)">
+        Password is required
+      </div>
+    </div>
+    <div class="custom-control custom-switch mt-2">
+      <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
+      <label class="custom-control-label" for="rememberMe">Remember me</label>
+    </div>
+    <button class="btn btn-lg btn-outline-secondary btn-block mt-3" type="submit">
+      <div style="display: contents;"><span data-feather="log-in"></span></div>
+      Login
+    </button>
+  </form>
+  <div [ngClass]="{'animate__animated animate__zoomIn': loading}" [hidden]="!loading">
+    <div class="animate__animated animate__heartBeat animate__infinite">
+      <i-feather data-feather="cpu"></i-feather>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.nav-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-link.active {
+  background-color: white;
+  color: black;
+}
+
+.nav-link.active svg {
+  color: green;
+}

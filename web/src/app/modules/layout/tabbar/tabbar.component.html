@@ -1,0 +1,10 @@
+<div class="nav">
+  <div *ngFor="let tab of tabs" class="nav-link mr-1" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}" style="border-top-left-radius: 4px; border-top-right-radius: 4px;">
+    <span (click)="closeTab(tab)" *ngIf="tab.stick"><i data-feather="x"></i></span>
+    <span (click)="stickTab(tab)" *ngIf="!tab.stick"><i data-feather="plus"></i></span>
+    <a [routerLink]="[tab.route]">
+      {{ tab.name }}
+    </a>
+  </div>
+</div>

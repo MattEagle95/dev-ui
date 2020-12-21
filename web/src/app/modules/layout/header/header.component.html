@@ -1,0 +1,46 @@
+<nav class="navbar navbar-dark sticky-top bg-dark p-0 shadow">
+  <a class="navbar-brand col-2 mr-0 px-3" href="#"><span data-feather="cpu"></span> PM2-UI</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+    data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="col-10 d-flex justify-content-between align-items-center">
+    <i-feather name="menu"></i-feather>
+    <input type="text" class="form-control form-control-sm" style="width: 200px;" placeholder="Search..." />
+    <div class="text-dark mr-auto align-items-center d-flex justify-content-center align-items-center"
+      style="font-size: 1rem;">
+      <div class="mx-2">
+        Warnings: <div class="badge badge-warning ml-1">{{notifyService.logWarnings | async}}</div>
+      </div>
+      <div class="mx-2">
+        Errors: <div class="badge badge-danger ml-1">{{notifyService.logErrors | async}}</div>
+      </div>
+    </div>
+    <nav class="nav px-3 text-dark ml-auto align-items-center">
+      <div ngbDropdown class="d-inline-block" display="dynamic">
+        <a class="nav-link text-dark" placement="bottom" ngbTooltip="Notifications" id="dropdownBasic1"
+          ngbDropdownToggle>
+          <i-feather name="bell"></i-feather>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="min-width: 300px">
+          <div ngbDropdownItem class="d-flex justify-content-between align-items-center">
+            <span data-feather="check-circle"></span>
+            <div>Process <b>#1</b> online</div>
+          </div>
+        </div>
+      </div>
+      <a class="nav-link text-dark" href="#" placement="bottom" ngbTooltip="Change name and password">
+        <i-feather name="user"></i-feather> Colin
+      </a>
+      <a class="nav-link text-dark" href="#" placement="bottom" ngbTooltip="Maximize">
+        <i-feather name="maximize"></i-feather>
+      </a>
+      <a class="nav-link text-dark" href="#" placement="bottom" ngbTooltip="Light Mode">
+        <i-feather name="sun"></i-feather>
+      </a>
+      <a class="nav-link text-dark" href="#" placement="bottom" ngbTooltip="Sign out">
+        <i-feather name="log-out"></i-feather>
+      </a>
+    </nav>
+  </div>
+</nav>
